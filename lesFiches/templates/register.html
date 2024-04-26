@@ -1,14 +1,29 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
+
 <head>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
     <title>Inscription</title>
 </head>
+
 <body>
-<h2>Inscription</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">S'inscrire</button>
-</form>
+    <section class="block">
+        <div class="container">
+            <div class="main-title">
+                <h1 class="title">Perdresonargent.py</h1>
+            </div>
+        </div>
+    </section>
+
+    <div class="card">
+        <h2>Inscription</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
 </body>
+
 </html>
