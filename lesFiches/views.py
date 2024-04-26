@@ -32,21 +32,27 @@ def user_logout(request):
 
 def home(request):
     form = None
-    if request.method == 'POST':
-        form = betsForm(request.POST)
-        if form.is_valid():
-            result = random.randint(1, 50)  # Exemple de génération aléatoire
-            new_bet = bets(
-                user_bet=request.POST['user_bet'],
-                user_percent=request.POST['user_percent'],
-                result=result,
-            )
-            new_bet.save()
-            return render(request, 'index.html',
-                          {'result': result, 'user_percent': request.POST['user_percent'], 'result_page': True})
-            pass
+    if request.method == 'POST' and request.user.is_authenticated:
+        if (request.user.is_authenticated):
 
-    return render(request, 'index.html', {'form': form, 'result_page': False})
+            form = betsForm(request.POST)
+            if form.is_valid():
+                result = random.randint(1, 50)  # Exemple de génération aléatoire
+                new_bet = bets(
+                    user_bet=request.POST['user_bet'],
+                    user_percent=request.POST['user_percent'],
+                    result=result,
+                )
+                new_bet.save()
+                return render(request, 'index.html',
+                              {'result': result, 'user_percent': int(request.POST['user_percent']), 'result_page': True,
+                               'logged': True})
+                pass
+        else:
+            return render(request, 'index.html', {'form': form, 'logged': False})
+
+    else:
+        return render(request, 'index.html', {'form': form, 'logged': True})
 
 
 def listeMovies(request):
@@ -73,7 +79,7 @@ def user_register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('login')  # Rediriger vers la page après l'inscription
+            return redirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})

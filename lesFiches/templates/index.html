@@ -26,7 +26,7 @@
                     {% csrf_token %}
                     <label for="user_bet">Mise</label>
                     <input type="number" name="user_bet" id="user_bet" class="input">
-                    <label for="user_percent">Pourcentage</label>
+                    <label for="user_percent">Multiplicateur</label>
                     <input type="number" name="user_percent" id="user_percent" class="input">
                     <input type="hidden" name="result" value="4">
                     <button class="submit" type="submit">Valider</button>
@@ -34,8 +34,11 @@
             </div>
             <div class="basis-50">
                 <div style="text-align: center">
+                    {% if logged ==  False %}
+                        <span style="background-color: #cb2a2a; color: white; padding: 16px;">Vous devez vous connecter pour jouer</span>
+                    {% endif %}
                     {% if result_page == True %}
-                        {% if user_percent == 2 %}
+                        {% if user_percent <= result %}
                             <span style="background-color: #3cb23c; color: white; padding: 16px;">Félicitation, vous avez gagné</span>
                         {% else %}
                             <span style="background-color: #cb2a2a; color: white; padding: 16px;">Quel dommage, vous avez perdu :(</span>
