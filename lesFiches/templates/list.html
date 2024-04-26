@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Date de sortie</th>
+            <th>Note</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for film in films %}
+            <tr>
+                <td>{{ film.titre }}</td>
+                <td>{{ film.date_sortie }}</td>
+                <td>{{ film.note }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
