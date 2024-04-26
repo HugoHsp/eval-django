@@ -10,6 +10,14 @@ class Acteur(models.Model):
     date_naissance = models.DateField()
 
 
+class bets(models.Model):
+    user_bet = models.IntegerField()
+    user_percent = models.FloatField()
+    result = models.FloatField()
+    lastname = models.CharField(max_length=250)
+    firstname = models.CharField(max_length=250)
+
+
 class Realisateur(models.Model):
     nom = models.CharField(max_length=250)
     prenom = models.CharField(max_length=250)
@@ -27,5 +35,6 @@ class MovieCard(models.Model):
     realisateur = models.ForeignKey(Realisateur, on_delete=models.CASCADE, related_name='films')
     acteur = models.ManyToManyField(Acteur, related_name='films')
 
-    def __str__(self):
-        return self.titre
+
+def __str__(self):
+    return self.titre
