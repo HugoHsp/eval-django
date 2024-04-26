@@ -30,11 +30,16 @@
                     <input type="number" name="user_percent" id="user_percent" class="input">
                     <input type="hidden" name="result" value="4">
                     <button class="submit" type="submit">Valider</button>
+                    {% if logged ==  True %}
+                        <a href="{% url 'logout' %}">Déconnexion</a>
+                    {% else %}
+                        <a href="{% url 'login' %}">Se connecter</a>
+                    {% endif %}
                 </form>
             </div>
             <div class="basis-50">
                 <div style="text-align: center">
-                    {% if logged ==  False %}
+                    {% if logged == False %}
                         <span style="background-color: #cb2a2a; color: white; padding: 16px;">Vous devez vous connecter pour jouer</span>
                     {% endif %}
                     {% if result_page == True %}

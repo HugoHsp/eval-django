@@ -3,11 +3,10 @@ import random
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.template import Template, Context
 
-from lesFiches.models import MovieCard, bets
-from .forms import LoginForm
-from .forms import betsForm
+from lesFiches.models import MovieCard
+from .forms import LoginForm, betsForm
+
 
 def rules(request):
     return render(request, 'rules.html')
@@ -34,46 +33,30 @@ def user_logout(request):
 
 
 def home(request):
-    form = None
-    if request.method == 'POST' and request.user.is_authenticated:
-        if (request.user.is_authenticated):
+    if not request.user.is_authenticated:
+        return render(request, 'index.html', {'logged': False})
 
-            form = betsForm(request.POST)
-            if form.is_valid():
-                result = random.randint(1, 50)  # Exemple de génération aléatoire
-                new_bet = bets(
-                    user_bet=request.POST['user_bet'],
-                    user_percent=request.POST['user_percent'],
-                    result=result,
-                )
-                new_bet.save()
-                return render(request, 'index.html',
-                              {'result': result, 'user_percent': int(request.POST['user_percent']), 'result_page': True,
-                               'logged': True})
-                pass
-        else:
-            return render(request, 'index.html', {'form': form, 'logged': False})
+    form = betsForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        result = random.randint(1, 50)  # Exemple de génération aléatoire
+        new_bet = form.save(commit=False)
+        new_bet.result = result
+        new_bet.save()
+        return render(request, 'index.html',
+                      {'result': result, 'user_percent': form.cleaned_data['user_percent'], 'result_page': True,
+                       'logged': True})
 
-    else:
-        return render(request, 'index.html', {'form': form, 'logged': True})
+    return render(request, 'index.html', {'form': form, 'logged': True})
 
 
 def listeMovies(request):
     films = MovieCard.objects.all().order_by("date_sortie")
-    page = """
-    {% for film in films %}
-    {{film.titre}} <br>
-    {% endfor %}
-    """
-    template = Template(page)
-    context = Context({"films": films})
-    return render(request, template_name='list.html'
-                  , context={'films': films})
+    return render(request, 'list.html', {'films': films})
 
 
 def listeMoviesTemplate2(request):
     films = MovieCard.objects.all().order_by('date_sortie')
-    return render(request, template_name='list2.html', context={'films': films})
+    return render(request, 'list2.html', {'films': films})
 
 
 def user_register(request):
@@ -86,3 +69,8 @@ def user_register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
