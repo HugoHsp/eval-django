@@ -9,6 +9,9 @@ from lesFiches.models import MovieCard, bets
 from .forms import LoginForm
 from .forms import betsForm
 
+def rules(request):
+    return render(request, 'rules.html')
+
 
 def user_login(request):
     if request.method == 'POST':
