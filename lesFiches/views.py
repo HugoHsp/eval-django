@@ -38,7 +38,7 @@ def home(request):
             form.save()
             pass
         else :
-            return render(request, '/lesFiches/login.html')
+            return render(request, 'protected.html')
 
     return render(request, 'index.html', {'form': form})
 
