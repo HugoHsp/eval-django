@@ -36,17 +36,30 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'index.html', {'logged': False})
 
-    form = betsForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        result = random.randint(1, 50)  # Exemple de génération aléatoire
-        new_bet = form.save(commit=False)
-        new_bet.result = result
-        new_bet.save()
-        return render(request, 'index.html',
-                      {'result': result, 'user_percent': form.cleaned_data['user_percent'], 'result_page': True,
-                       'logged': True})
+    if not request.session['money']:
+        request.session['money'] = 10
 
-    return render(request, 'index.html', {'form': form, 'logged': True})
+    form = betsForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+
+        if int(request.session['money']) >= int(request.POST['user_bet']) > 0:
+
+            result = random.randint(1, 50)
+            new_bet = form.save(commit=False)
+            new_bet.result = result
+            new_bet.save()
+
+            if request.POST['user_percent'] <= request.POST['result']:
+                request.session['money'] = int(request.POST['user_percent']) * int(request.POST['user_bet'])
+            else:
+                request.session['money'] -= int(request.POST['user_bet'])
+
+            return render(request, 'index.html',
+                          {'result': result, 'user_percent': form.cleaned_data['user_percent'], 'result_page': True,
+                           'logged': True, 'money': request.session['money']})
+
+    return render(request, 'index.html', {'form': form, 'logged': True, 'money': request.session['money']})
 
 
 def listeMovies(request):
