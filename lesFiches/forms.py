@@ -4,8 +4,9 @@ from .models import bets
 
 
 class betsForm(forms.ModelForm):
-    model = bets
-    fields = ['lastname', 'firstname', 'user_bet', 'user_percent']
+    class Meta:
+        model = bets
+        fields = ['user_bet', 'user_percent', 'result']
 
 
 class LoginForm(forms.Form):

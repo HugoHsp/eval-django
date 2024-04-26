@@ -3,16 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Perdresonargent.com</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="text" name="lastname" id="" placeholder="Nom">
-    <input type="text" name="firstname" id="" placeholder="Prénom">
-    <input type="number" name="user_bet" id="" placeholder="Mise">
-    <input type="number" name="user_percent" id="" placeholder="Pourcentage estimé">
-    <input type="number" name="result" id="" placeholder="Result">
-    <button type="submit" class="submit">Valider</button>
-</form>
+<section class="block">
+    <div class="container">
+        <div class="main-title">
+            <h1 class="title">Perdresonargent.py</h1>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="flex">
+            <div class="basis-50">
+                <h2 class="title-2">
+                    Renseignez ces informations avant de jouer
+                </h2>
+                <form action="" method="post" class="grid">
+                    {% csrf_token %}
+                    <label for="user_bet">Mise</label>
+                    <input type="number" name="user_bet" id="user_bet" class="input">
+                    <label for="user_percent">Pourcentage</label>
+                    <input type="number" name="user_percent" id="user_percent" class="input">
+                    <input type="hidden" name="result" value="4">
+                    <button class="submit" type="submit">Valider</button>
+                </form>
+            </div>
+            <div class="basis-50">
+                <div style="text-align: center">
+                    {% if result_page == True %}
+                        {% if user_percent == 2 %}
+                            <span style="background-color: #3cb23c; color: white; padding: 16px;">Félicitation, vous avez gagné</span>
+                        {% else %}
+                            <span style="background-color: #cb2a2a; color: white; padding: 16px;">Quel dommage, vous avez perdu :(</span>
+                        {% endif %}
+                    {% endif %}
+                    <h1 style="font-size: 128px; margin-top: 32px;">{{ result }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

@@ -1,11 +1,11 @@
+import random
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.template import Template, Context
-from django.contrib.auth.decorators import login_required
 
-
-from lesFiches.models import MovieCard
+from lesFiches.models import MovieCard, bets
 from .forms import LoginForm
 from .forms import betsForm
 
@@ -29,18 +29,24 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
-@login_required
+
 def home(request):
     form = None
     if request.method == 'POST':
         form = betsForm(request.POST)
         if form.is_valid():
-            form.save()
+            result = random.randint(1, 50)  # Exemple de génération aléatoire
+            new_bet = bets(
+                user_bet=request.POST['user_bet'],
+                user_percent=request.POST['user_percent'],
+                result=result,
+            )
+            new_bet.save()
+            return render(request, 'index.html',
+                          {'result': result, 'user_percent': request.POST['user_percent'], 'result_page': True})
             pass
-        else :
-            return render(request, '/lesFiches/login.html')
 
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', {'form': form, 'result_page': False})
 
 
 def listeMovies(request):
