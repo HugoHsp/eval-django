@@ -1,13 +1,26 @@
-<!-- rules.html -->
-
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/rules.css' %}">
+
     <title>Rules</title>
 </head>
+
 <body>
-    <h1>Rules</h1>
-    <p>Insert your rules content here...</p>
+<div class="card">
+    <h1>Les règles</h1>
+    <p>Le but du jeu est simple : vous devez indiquer votre mise de départ ainsi qu'un multiplicateur.</p>
+    <ul>
+        <li>Si votre multiplicateur est inférieur ou égal à celui indiqué par le site, vous multipiez votre mise par
+            votre multiplicateur.
+        </li>
+        <li>Si votre multiplicateur est supérieur à celui indiqué par le site, vous perdez votre mise.</li>
+    </ul>
+</div>
+
 </body>
+
 </html>
