@@ -13,7 +13,7 @@ class Acteur(models.Model):
 class bets(models.Model):
     user_bet = models.IntegerField()
     user_percent = models.FloatField()
-    result = models.FloatField()
+    result = models.FloatField(default=34)
     lastname = models.CharField(max_length=250)
     firstname = models.CharField(max_length=250)
 
@@ -23,7 +23,7 @@ class Realisateur(models.Model):
     prenom = models.CharField(max_length=250)
     age = models.IntegerField(default=20)
     date_naissance = models.DateField()
-    
+
 
 class MovieCard(models.Model):
     titre = models.CharField(max_length=250)

@@ -6,9 +6,13 @@
 </head>
 <body>
 <form action="" method="post">
-    <input type="text" name="lastname" id="">
-    <input type="text" name="firstname" id="">
-    <input type="number" name="Prénom" id="">
+    {% csrf_token %}
+    <input type="text" name="lastname" id="" placeholder="Nom">
+    <input type="text" name="firstname" id="" placeholder="Prénom">
+    <input type="number" name="user_bet" id="" placeholder="Mise">
+    <input type="number" name="user_percent" id="" placeholder="Pourcentage estimé">
+    <input type="number" name="result" id="" placeholder="Result">
+    <button type="submit" class="submit">Valider</button>
 </form>
 </body>
 </html>
