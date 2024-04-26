@@ -3,7 +3,6 @@ html {
 }
 
 .main-title {
-    padding: 16px 0 16px 0;
     color: white;
 }
 
@@ -13,6 +12,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+}
+
+.block {
+    position: absolute;
 }
 
 .card {
@@ -33,6 +36,7 @@ body {
 h2 {
     text-align: center;
     color: #ffffff;
+    margin-block-end: 0;
 }
 
 form {
@@ -53,26 +57,29 @@ p {
 }
 
 input {
-    background: none;
-    border: solid 1px;
-    border-color: #ffffff;
-    border-radius: 25px;
-    padding: 8px;
+    webkit-appearance: none;
+    border: none;
+    background-color: #292c3d;
+    padding: 12px;
+    border: 1px solid #1c212d;
+    border-radius: 6px;
+    width: auto;
     color: #ffffff;
 }
 
 button {
-    background: none;
-    border-radius: 25px;
-    padding: 10px;
-    border: solid 1px;
-    border-color: #ffffff;
-    color: #ffffff;
+    width: fit-content;
+    padding: 12px 24px 12px 24px;
+    background-color: #13c57e;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
     transition: 0.4s;
 }
 
 button:hover {
-    background-color: #ffffff;
+    background-color: #FFD700;
     color: #1c1b29;
 }
 
